@@ -1,26 +1,27 @@
 import React from "react";
+import { Button } from "./components/Button";
 
 function App() {
   return (
     <div className="App">
-      <p>1+1</p>
-      <div>
-        <button>1</button>
-        <button>2</button>
-        <button>3</button>
-        <button>4</button>
-        <button>5</button>
-        <button>6</button>
-        <button>7</button>
-        <button>8</button>
-        <button>9</button>
-        <button>+</button>
-        <button>-</button>
-        <button>*</button>
-        <button>/</button>
-        <button>=</button>
-        <button>clear</button>
-        <button>delete</button>
+      <p className="font-bold">1+1</p>
+      <div className="flex justify-around">
+        <Button text="1" />
+        <Button text="2" />
+        <Button text="3" />
+        <Button text="4" />
+        <Button text="5" />
+        <Button text="6" />
+        <Button text="7" />
+        <Button text="8" />
+        <Button text="9" />
+        <Button text="+" />
+        <Button text="-" />
+        <Button text="*" />
+        <Button text="/" />
+        <Button text="=" />
+        <Button text="clear" />
+        <Button text="delete" />
       </div>
     </div>
   );
