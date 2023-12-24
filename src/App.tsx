@@ -2,23 +2,31 @@ import React, { useState } from "react";
 import { Button } from "./components/Button";
 
 function App() {
-  const [formula, setFormula] = useState<string>("");
+  const [inputValues, setInputValues] = useState<string[]>([]);
 
   const addToFormula = (value: string) => {
-    setFormula((prev) => prev + value);
+    setInputValues((prev) => [...prev, value]);
   };
 
   const clearFormula = () => {
-    setFormula("");
+    setInputValues([]);
   };
 
   const deleteFromFormula = () => {
-    setFormula((prev) => prev.slice(0, -1));
+    setInputValues((prev) => prev.slice(0, -1));
+  };
+
+  const displayFormula = () => {
+    let displayedFormula = "";
+    for (let i = 0; i < inputValues.length; i++) {
+      displayedFormula += inputValues[i];
+    }
+    return displayedFormula;
   };
 
   return (
     <div className="App">
-      <p className="font-bold">{formula}</p>
+      <p className="font-bold">{displayFormula()}</p>
       <div className="flex justify-around">
         <Button text="1" onClick={() => addToFormula("1")} />
         <Button text="2" onClick={() => addToFormula("2")} />
