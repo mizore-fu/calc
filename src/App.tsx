@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { Button } from "./components/Button";
+import { BE_URL } from "./constants";
 
 function App() {
   const [inputValues, setInputValues] = useState<string[]>([]);
@@ -24,6 +26,29 @@ function App() {
     return displayedFormula;
   };
 
+  const calcFormula = () => {
+    const values: string[] = [];
+    let numberStr = "";
+    for (let i = 0; i < inputValues.length; i++) {
+      const value = inputValues[i];
+      if (/[\+\-\*\/]/.test(value)) {
+        values.push(numberStr);
+        values.push(value);
+        numberStr = "";
+        continue;
+      }
+      numberStr += value;
+    }
+    values.push(numberStr);
+    axios
+      .post(`${BE_URL}/calc`, {
+        values: values,
+      })
+      .then(({ data }) => {
+        setInputValues([data["value"]]);
+      });
+  };
+
   return (
     <div className="App">
       <p className="font-bold">{displayFormula()}</p>
@@ -41,7 +66,7 @@ function App() {
         <Button text="-" onClick={() => addToFormula("-")} />
         <Button text="*" onClick={() => addToFormula("*")} />
         <Button text="/" onClick={() => addToFormula("/")} />
-        <Button text="=" onClick={() => {}} />
+        <Button text="=" onClick={calcFormula} />
         <Button text="clear" onClick={clearFormula} />
         <Button text="delete" onClick={deleteFromFormula} />
       </div>
