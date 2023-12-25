@@ -5,16 +5,20 @@ import { BE_URL } from "./constants";
 
 function App() {
   const [inputValues, setInputValues] = useState<string[]>([]);
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const addToFormula = (value: string) => {
+    setErrorMessage("");
     setInputValues((prev) => [...prev, value]);
   };
 
   const clearFormula = () => {
+    setErrorMessage("");
     setInputValues([]);
   };
 
   const deleteFromFormula = () => {
+    setErrorMessage("");
     setInputValues((prev) => prev.slice(0, -1));
   };
 
@@ -46,12 +50,16 @@ function App() {
       })
       .then(({ data }) => {
         setInputValues(data["values"]);
+      })
+      .catch(({ response }) => {
+        setErrorMessage(response["data"]);
       });
   };
 
   return (
     <div className="App">
       <p className="font-bold">{displayFormula()}</p>
+      <p>{errorMessage}</p>
       <div className="flex justify-around">
         <Button text="1" onClick={() => addToFormula("1")} />
         <Button text="2" onClick={() => addToFormula("2")} />
