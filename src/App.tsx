@@ -1,24 +1,65 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { Button } from "./components/Button";
+import { BE_URL } from "./constants";
 
 function App() {
-  const [formula, setFormula] = useState<string>("");
+  const [inputValues, setInputValues] = useState<string[]>([]);
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const addToFormula = (value: string) => {
-    setFormula((prev) => prev + value);
+    setErrorMessage("");
+    setInputValues((prev) => [...prev, value]);
   };
 
   const clearFormula = () => {
-    setFormula("");
+    setErrorMessage("");
+    setInputValues([]);
   };
 
   const deleteFromFormula = () => {
-    setFormula((prev) => prev.slice(0, -1));
+    setErrorMessage("");
+    setInputValues((prev) => prev.slice(0, -1));
+  };
+
+  const displayFormula = () => {
+    let displayedFormula = "";
+    for (let i = 0; i < inputValues.length; i++) {
+      displayedFormula += inputValues[i];
+    }
+    return displayedFormula;
+  };
+
+  const calcFormula = () => {
+    const values: string[] = [];
+    let numberStr = "";
+    for (let i = 0; i < inputValues.length; i++) {
+      const value = inputValues[i];
+      if (/[\+\-\*\/]/.test(value)) {
+        values.push(numberStr);
+        values.push(value);
+        numberStr = "";
+        continue;
+      }
+      numberStr += value;
+    }
+    values.push(numberStr);
+    axios
+      .post(`${BE_URL}/calc`, {
+        values: values,
+      })
+      .then(({ data }) => {
+        setInputValues(data["values"]);
+      })
+      .catch(({ response }) => {
+        setErrorMessage(response["data"]);
+      });
   };
 
   return (
     <div className="App">
-      <p className="font-bold">{formula}</p>
+      <p className="font-bold">{displayFormula()}</p>
+      <p>{errorMessage}</p>
       <div className="flex justify-around">
         <Button text="1" onClick={() => addToFormula("1")} />
         <Button text="2" onClick={() => addToFormula("2")} />
@@ -33,7 +74,7 @@ function App() {
         <Button text="-" onClick={() => addToFormula("-")} />
         <Button text="*" onClick={() => addToFormula("*")} />
         <Button text="/" onClick={() => addToFormula("/")} />
-        <Button text="=" onClick={() => {}} />
+        <Button text="=" onClick={calcFormula} />
         <Button text="clear" onClick={clearFormula} />
         <Button text="delete" onClick={deleteFromFormula} />
       </div>
