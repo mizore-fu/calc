@@ -61,6 +61,7 @@ function App() {
       <p className="font-bold">{displayFormula()}</p>
       <p>{errorMessage}</p>
       <div className="flex justify-around">
+        <Button text="0" onClick={() => addToFormula("0")} />
         <Button text="1" onClick={() => addToFormula("1")} />
         <Button text="2" onClick={() => addToFormula("2")} />
         <Button text="3" onClick={() => addToFormula("3")} />
