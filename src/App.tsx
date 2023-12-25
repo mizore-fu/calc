@@ -45,7 +45,7 @@ function App() {
         values: values,
       })
       .then(({ data }) => {
-        setInputValues([data["value"]]);
+        setInputValues(data["values"]);
       });
   };
 
