@@ -7,7 +7,10 @@ type Props = {
 
 export const Button: FC<Props> = ({ text, onClick }) => {
   return (
-    <button className="p-4 border" onClick={onClick}>
+    <button
+      className="w-full p-4 rounded-md bg-gray-600 text-white"
+      onClick={onClick}
+    >
       {text}
     </button>
   );

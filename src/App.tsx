@@ -57,27 +57,41 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <p className="font-bold">{displayFormula()}</p>
-      <p>{errorMessage}</p>
-      <div className="flex justify-around">
-        <Button text="0" onClick={() => addToFormula("0")} />
-        <Button text="1" onClick={() => addToFormula("1")} />
-        <Button text="2" onClick={() => addToFormula("2")} />
-        <Button text="3" onClick={() => addToFormula("3")} />
-        <Button text="4" onClick={() => addToFormula("4")} />
-        <Button text="5" onClick={() => addToFormula("5")} />
-        <Button text="6" onClick={() => addToFormula("6")} />
-        <Button text="7" onClick={() => addToFormula("7")} />
-        <Button text="8" onClick={() => addToFormula("8")} />
-        <Button text="9" onClick={() => addToFormula("9")} />
-        <Button text="+" onClick={() => addToFormula("+")} />
-        <Button text="-" onClick={() => addToFormula("-")} />
-        <Button text="*" onClick={() => addToFormula("*")} />
-        <Button text="/" onClick={() => addToFormula("/")} />
-        <Button text="=" onClick={calcFormula} />
-        <Button text="clear" onClick={clearFormula} />
-        <Button text="delete" onClick={deleteFromFormula} />
+    <div className="App min-h-screen bg-gray-800 flex justify-center">
+      <div className="w-80 p-2 space-y-2">
+        <p className="h-14 p-2 rounded-md bg-white text-xl text-right leading-10">
+          {displayFormula()}
+        </p>
+        <div className="space-y-1">
+          <div className="flex space-x-1">
+            <Button text="7" onClick={() => addToFormula("7")} />
+            <Button text="8" onClick={() => addToFormula("8")} />
+            <Button text="9" onClick={() => addToFormula("9")} />
+            <Button text="/" onClick={() => addToFormula("/")} />
+          </div>
+          <div className="flex space-x-1">
+            <Button text="4" onClick={() => addToFormula("4")} />
+            <Button text="5" onClick={() => addToFormula("5")} />
+            <Button text="6" onClick={() => addToFormula("6")} />
+            <Button text="*" onClick={() => addToFormula("*")} />
+          </div>
+          <div className="flex space-x-1">
+            <Button text="1" onClick={() => addToFormula("1")} />
+            <Button text="2" onClick={() => addToFormula("2")} />
+            <Button text="3" onClick={() => addToFormula("3")} />
+            <Button text="-" onClick={() => addToFormula("-")} />
+          </div>
+          <div className="flex space-x-1">
+            <Button text="0" onClick={() => addToFormula("0")} />
+            <Button text="DEL" onClick={deleteFromFormula} />
+            <Button text="AC" onClick={clearFormula} />
+            <Button text="+" onClick={() => addToFormula("+")} />
+          </div>
+          <div>
+            <Button text="=" onClick={calcFormula} />
+          </div>
+        </div>
+        <p className="h-14 text-center text-red-500">{errorMessage}</p>
       </div>
     </div>
   );
